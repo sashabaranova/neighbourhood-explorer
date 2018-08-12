@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+
+.map-container{
+  height: 95vh;
+  width: 100%;
+}
+
+.locations-list {
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+  top: 100px;
+}
+
+.header {
+  font-size: 60%;
+}
+
+i {
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
+.fa-building::before {
+  color: brown;
+}
+
+.fa-hotel::before {
+  color: blue;
+}
+.fa-leaf::before {
+  color: #4ea90d;
+}
+.fa-university::before {
+  color: blue;
+}
+.fa-theater-masks::before {
+  color: blue;
+}
+
+@media screen and (min-width: 500px) {
+  .App {
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+
+  .map-container{
+    height: 100vh;
+    width: 100%;
+  }
+}
