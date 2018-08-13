@@ -8,34 +8,39 @@ class App extends Component {
 
   state = {
     markers: [
-      { title: "Statue of Sir Stamford Raffles", location: { lat: 1.2903844, lng: 103.8521383 }, icon: "fas fa-monument" },
-      { title: "Esplanade", location: { lat: 1.2897934, lng: 103.8558166 }, icon: "fas fa-theater-masks" },
-      { title: "Gardens by the Bay", location: { lat: 1.282917280291502, lng: 103.8649621802915 }, icon: "fas fa-leaf" },
-      { title: "One Raffles Place", location: { lat: 1.285536280291502, lng: 103.8524067802915 }, icon: "fas fa-building" },
-      { title: "Fort Canning", location: { lat: 1.295860780291502, lng: 103.8471493802915 }, icon: "fas fa-leaf" },
-      { title: "Masjid Sultan", location: { lat: 1.302751, lng: 103.8565582 }, icon: "fas fa-university" },
-      { title: "Singapore Art Museum", location: { lat: 1.2973126, lng: 103.8488728 }, icon: "fas fa-university" }
+      { id: 1, title: "Statue of Sir Stamford Raffles", location: { lat: 1.2903844, lng: 103.8521383 }, /*icon: "fas fa-monument"*/ },
+      { id: 2, title: "Esplanade", location: { lat: 1.2897934, lng: 103.8558166 }, /*icon: "fas fa-theater-masks"*/ },
+      { id: 3, title: "Gardens by the Bay", location: { lat: 1.282917280291502, lng: 103.8649621802915 }, /*icon: "fas fa-leaf"*/ },
+      { id: 4, title: "One Raffles Place", location: { lat: 1.285536280291502, lng: 103.8524067802915 }, /*icon: "fas fa-building"*/ },
+      { id: 5, title: "Fort Canning", location: { lat: 1.295860780291502, lng: 103.8471493802915 }, /*icon: "fas fa-leaf"*/ },
+      { id: 6, title: "Masjid Sultan", location: { lat: 1.302751, lng: 103.8565582 }, /*icon: "fas fa-university"*/ },
+      { id: 7, title: "Singapore Art Museum", location: { lat: 1.2973126, lng: 103.8488728 }, /*icon: "fas fa-university"*/ }
     ],
-    activeMarker: {},
-    selectedPlace: {}
+
+    activeMarkerId: null
   };
 
-  onMouseoverMarker = (props, marker, e) => {
-    if (this.state.activeMarker === null || this.state.activeMarker.title !== marker.title) {
+  onMouseOverMarker = (e) => {
+    if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.id) {
       this.setState({ 
-          activeMarker: marker
+          activeMarkerId: e.target.id
           //selectedPlace: props
         }
       );
+      e.target.style.color = 'red';
+      e.target.style.fontSize = '2.7em';
+
+      console.log(e.target.style, this.state.activeMarkerId);
     }
 
-    //console.log('mouse over', this.state.activeMarker);
+  //   //console.log('mouse over', this.state.activeMarker);
   };
 
-  onMouseOutOfMarker = (props, marker, e) => {
-    this.setState({ activeMarker: null });
-
-    //console.log('mouse out');
+  onMouseOutOfMarker = (e) => {
+    this.setState({ activeMarkerId: null });
+    e.target.style.color = 'black';
+    e.target.style.fontSize = '2.5em';
+    console.log('mouse out');
   };
 
   render() {
@@ -44,18 +49,12 @@ class App extends Component {
         <div className="header">
           <h1>Neighbourhood Explorer</h1>
         </div>
-
-        { /* <ListLocations 
-          markers={this.state.markers}
-          activeMarker={this.activeMarker}
-          onMouseoverMarker={this.onMouseoverMarker}
-          onMouseOutOfMarker={this.onMouseOutOfMarker} /> */ }
-
         <MapDisplay
           markers={this.state.markers}
-          activeMarker={this.state.activeMarker}
-          onMouseoverMarker={this.onMouseoverMarker}
-          onMouseOutOfMarker={this.onMouseOutOfMarker} />
+          onMouseOverMarker={this.onMouseOverMarker}
+          onMouseOutOfMarker={this.onMouseOutOfMarker}
+          activeMarkerId={this.state.activeMarkerId}
+          />
       </div>
     );
   }
