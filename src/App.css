@@ -46,27 +46,27 @@ i {
   cursor: pointer;
 }
 
-.fa-building::before {
-  color: brown;
+.red {
+  color: red;
 }
 
-.fa-hotel::before {
-  color: blue;
-}
-.fa-leaf::before {
-  color: #4ea90d;
-}
-.fa-university::before {
-  color: blue;
-}
-.fa-theater-masks::before {
-  color: blue;
+.black {
+  color: black;
 }
 
-@media screen and (min-width: 500px) {
+.infobox {
+  width: 100%;
+  height: 50%;
+  z-index: 999;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+}
+
+@media screen and (min-width: 900px) {
   .App {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 50% 50%;
   }
 
   .map-container{

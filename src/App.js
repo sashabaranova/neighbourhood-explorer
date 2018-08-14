@@ -17,18 +17,14 @@ class App extends Component {
       { id: 7, title: "Singapore Art Museum", location: { lat: 1.2973126, lng: 103.8488728 }, /*icon: "fas fa-university"*/ }
     ],
 
-    activeMarkerId: null
+    activeMarkerId: null,
+    markerClicked: null
   };
+
 
   onMouseOverMarker = (e) => {
     if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.id) {
-      this.setState({ 
-          activeMarkerId: e.target.id
-          //selectedPlace: props
-        }
-      );
-      e.target.style.color = 'red';
-      e.target.style.fontSize = '2.7em';
+      this.setState({ activeMarkerId: e.target.id });
 
       console.log(e.target.style, this.state.activeMarkerId);
     }
@@ -37,16 +33,35 @@ class App extends Component {
   };
 
   onMouseOutOfMarker = (e) => {
+
     this.setState({ activeMarkerId: null });
-    e.target.style.color = 'black';
-    e.target.style.fontSize = '2.5em';
+
     console.log('mouse out');
   };
+
+  onMarkerClick = (e) => {
+    console.log(e.target);
+    if (this.state.markerClickedId === null || this.state.markerClickedId !== e.target.id) {
+      this.setState({ markerClickedId: e.target.id, activeMarkerId: null });
+    }
+    console.log('click');
+  };
+
+  onAppClick = (e) => {
+    if (this.state.markerClickedId !== null) {
+      this.setState({ markerClickedId: null });
+    }
+  };
+
+
+
 
   render() {
     return (
       <div className="App">
-        <div className="header">
+        <div className="header"
+          onClick={this.onAppClick}
+        >
           <h1>Neighbourhood Explorer</h1>
         </div>
         <MapDisplay
@@ -54,7 +69,17 @@ class App extends Component {
           onMouseOverMarker={this.onMouseOverMarker}
           onMouseOutOfMarker={this.onMouseOutOfMarker}
           activeMarkerId={this.state.activeMarkerId}
+          onMarkerClick={this.onMarkerClick}
+          activeMarkerId={this.state.activeMarkerId}
+          markerClickedId={this.state.markerClickedId}
+          onAppClick={this.onAppClick}
           />
+        {this.state.markerClickedId != null ? (
+          <div
+            className="infobox">
+            {this.state.markers[this.state.markerClickedId - 1].title}
+          </div>): null
+        } 
       </div>
     );
   }
