@@ -4,6 +4,10 @@ import React, { Component } from 'react';
 class ListLocations extends Component {
 
 	render() {
+
+		// this.props.markers.map(marker => console.log(marker.id));
+
+		console.log(this.props);
 		return (
 			<div className="locations-list">
 				<div className="filter-input-wrapper">
@@ -11,7 +15,13 @@ class ListLocations extends Component {
 				</div>
 				<ul>
 					{this.props.markers.map(marker => (
-						<li>{marker.title}</li>
+						<li 
+							key={`list${marker.id}`}
+							data-id={marker.id}
+							onMouseOver={this.props.onMouseOverListItem}
+							onMouseOut={this.props.onMouseOutofListItem}
+							onClick={this.props.onListItemClick}
+						>{marker.title}</li>
 					))}
 				</ul>
 			</div>

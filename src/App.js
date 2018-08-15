@@ -18,31 +18,32 @@ class App extends Component {
     ],
 
     activeMarkerId: null,
-    markerClicked: null
+    markerClickedId: null
   };
 
 
-  onMouseOverMarker = (e) => {
-    if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.id) {
-      this.setState({ activeMarkerId: e.target.id });
+  onMouseOverItem = (e) => {
+    console.log(e.target);
+    if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.dataset.id) {
+      this.setState({ activeMarkerId: e.target.dataset.id});
 
-      console.log(e.target.style, this.state.activeMarkerId);
+      // console.log(e.target.style, this.state.activeMarkerId);
     }
 
   //   //console.log('mouse over', this.state.activeMarker);
   };
 
-  onMouseOutOfMarker = (e) => {
+  onMouseOutOfItem = (e) => {
 
     this.setState({ activeMarkerId: null });
 
     console.log('mouse out');
   };
 
-  onMarkerClick = (e) => {
+  onItemClick = (e) => {
     console.log(e.target);
-    if (this.state.markerClickedId === null || this.state.markerClickedId !== e.target.id) {
-      this.setState({ markerClickedId: e.target.id, activeMarkerId: null });
+    if (this.state.markerClickedId === null || this.state.markerClickedId !== e.target.dataset.id) {
+      this.setState({ markerClickedId: e.target.dataset.id, activeMarkerId: null });
     }
     console.log('click');
   };
@@ -53,23 +54,28 @@ class App extends Component {
     }
   };
 
-
-
-
   render() {
     return (
       <div className="App">
-        <div className="header"
-          onClick={this.onAppClick}
-        >
-          <h1>Neighbourhood Explorer</h1>
+        <div className="header">
+          <h1
+            onClick={this.onAppClick}
+          >Neighbourhood Explorer</h1>
+          <ListLocations 
+            markers={this.state.markers}
+            onMouseOverListItem={this.onMouseOverItem}
+            onMouseOutofListItem={this.onMouseOutOfItem}
+            onListItemClick={this.onItemClick}
+            activeMarkerId={this.state.activeMarkerId}
+            markerClickedId={this.state.markerClickedId}
+            onAppClick={this.onAppClick}
+          />
         </div>
         <MapDisplay
           markers={this.state.markers}
-          onMouseOverMarker={this.onMouseOverMarker}
-          onMouseOutOfMarker={this.onMouseOutOfMarker}
-          activeMarkerId={this.state.activeMarkerId}
-          onMarkerClick={this.onMarkerClick}
+          onMouseOverMarker={this.onMouseOverItem}
+          onMouseOutOfMarker={this.onMouseOutOfItem}
+          onMarkerClick={this.onItemClick}
           activeMarkerId={this.state.activeMarkerId}
           markerClickedId={this.state.markerClickedId}
           onAppClick={this.onAppClick}
