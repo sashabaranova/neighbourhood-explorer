@@ -8,24 +8,31 @@ class App extends Component {
 
   state = {
     markers: [
-      { id: 1, title: "Statue of Sir Stamford Raffles", location: { lat: 1.2903844, lng: 103.8521383 }, /*icon: "fas fa-monument"*/ },
-      { id: 2, title: "Esplanade", location: { lat: 1.2897934, lng: 103.8558166 }, /*icon: "fas fa-theater-masks"*/ },
-      { id: 3, title: "Gardens by the Bay", location: { lat: 1.282917280291502, lng: 103.8649621802915 }, /*icon: "fas fa-leaf"*/ },
-      { id: 4, title: "One Raffles Place", location: { lat: 1.285536280291502, lng: 103.8524067802915 }, /*icon: "fas fa-building"*/ },
-      { id: 5, title: "Fort Canning", location: { lat: 1.295860780291502, lng: 103.8471493802915 }, /*icon: "fas fa-leaf"*/ },
-      { id: 6, title: "Masjid Sultan", location: { lat: 1.302751, lng: 103.8565582 }, /*icon: "fas fa-university"*/ },
-      { id: 7, title: "Singapore Art Museum", location: { lat: 1.2973126, lng: 103.8488728 }, /*icon: "fas fa-university"*/ }
+      { id: 1, title: 'Statue of Sir Stamford Raffles', location: { lat: 1.2903844, lng: 103.8521383 }, cat: 'art' },
+      { id: 2, title: 'Esplanade', location: { lat: 1.2897934, lng: 103.8558166 }, cat: 'music'},
+      { id: 3, title: 'Gardens by the Bay', location: { lat: 1.282917280291502, lng: 103.8649621802915 }, cat: 'parks' },
+      { id: 4, title: 'One Raffles Place', location: { lat: 1.285536280291502, lng: 103.8524067802915 }, cat: 'architecture' },
+      { id: 5, title: 'Fort Canning', location: { lat: 1.295860780291502, lng: 103.8471493802915 }, cat: 'parks' },
+      { id: 6, title: 'Masjid Sultan', location: { lat: 1.302751, lng: 103.8565582 }, cat: 'architecture' },
+      { id: 7, title: 'Singapore Art Museum', location: { lat: 1.2973126, lng: 103.8488728 }, cat: 'art' }
     ],
 
     activeMarkerId: null,
-    markerClickedId: null
+    markerClickedId: null,
+    option: null
+  };
+
+  handleSelectChange = (e) => {
+    this.setState({ option: e.target.value });
+    console.log(e.target.value);
   };
 
 
+
   onMouseOverItem = (e) => {
-    console.log(e.target);
+    console.log(e.target.dataset);
     if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.dataset.id) {
-      this.setState({ activeMarkerId: e.target.dataset.id});
+      this.setState({ activeMarkerId: e.target.dataset.id });
 
       // console.log(e.target.style, this.state.activeMarkerId);
     }
@@ -41,11 +48,11 @@ class App extends Component {
   };
 
   onItemClick = (e) => {
-    console.log(e.target);
+    console.log(e.target.dataset);
     if (this.state.markerClickedId === null || this.state.markerClickedId !== e.target.dataset.id) {
       this.setState({ markerClickedId: e.target.dataset.id, activeMarkerId: null });
     }
-    console.log('click');
+    // console.log('click');
   };
 
   onAppClick = (e) => {
@@ -55,6 +62,7 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state.activeMarkerId, this.state.markerClickedId)
     return (
       <div className="App">
         <div className="header">
@@ -69,6 +77,8 @@ class App extends Component {
             activeMarkerId={this.state.activeMarkerId}
             markerClickedId={this.state.markerClickedId}
             onAppClick={this.onAppClick}
+            handleSelectChange={this.handleSelectChange}
+            option={this.state.option}
           />
         </div>
         <MapDisplay
@@ -79,6 +89,7 @@ class App extends Component {
           activeMarkerId={this.state.activeMarkerId}
           markerClickedId={this.state.markerClickedId}
           onAppClick={this.onAppClick}
+          option={this.state.option}
           />
         {this.state.markerClickedId != null ? (
           <div

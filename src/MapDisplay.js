@@ -134,20 +134,35 @@ export class MapDisplay extends Component {
           options={this.props.options}
           onClick={this.props.onAppClick}>
 
-          {this.props.markers.map(marker => (
-            <CustomMarker
-              className="fas fa-map-marker-alt"
-              lat={marker.location.lat}
-              lng={marker.location.lng}
-              key={marker.id}
-              id={marker.id}
-              onMouseOver={this.props.onMouseOverMarker}
-              onMouseOut={this.props.onMouseOutOfMarker}
-              onClick={this.props.onMarkerClick}
-              activeMarkerId={this.props.activeMarkerId}
-              markerClickedId={this.props.markerClickedId}
-            />
-          ))}
+          {this.props.option === null || this.props.option === 'exploreAll' ?
+            this.props.markers.map(marker => (
+              <CustomMarker
+                className="fas fa-map-marker-alt"
+                lat={marker.location.lat}
+                lng={marker.location.lng}
+                key={marker.id}
+                id={marker.id}
+                onMouseOver={this.props.onMouseOverMarker}
+                onMouseOut={this.props.onMouseOutOfMarker}
+                onClick={this.props.onMarkerClick}
+                activeMarkerId={this.props.activeMarkerId}
+                markerClickedId={this.props.markerClickedId}
+              />
+            )) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
+              <CustomMarker
+                className="fas fa-map-marker-alt"
+                lat={marker.location.lat}
+                lng={marker.location.lng}
+                key={marker.id}
+                id={marker.id}
+                onMouseOver={this.props.onMouseOverMarker}
+                onMouseOut={this.props.onMouseOutOfMarker}
+                onClick={this.props.onMarkerClick}
+                activeMarkerId={this.props.activeMarkerId}
+                markerClickedId={this.props.markerClickedId}
+              />
+            ))
+          }
         </GoogleMapReact>
       </div>
     );
