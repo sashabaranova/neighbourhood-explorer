@@ -181,7 +181,7 @@ figure {
 
 figcaption {
   bottom: 4px;
-  /*RGBA used just in this one case to set the opacity so that children elements don't inherit it*/
+  /*RGBA used just to set the opacity so that children elements don't inherit it*/
   background: rgba(255, 102, 0, 0.3);
   color: #fff;
   padding: 0.8em 1.4em;

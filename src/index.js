@@ -6,7 +6,6 @@ import App from './App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// Check for browser support of service worker
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('sw.js')
 	.then(reg => {

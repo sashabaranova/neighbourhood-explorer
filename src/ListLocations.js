@@ -4,6 +4,8 @@ class ListLocations extends Component {
 
 	render() {
 
+
+
 		return (
 			<div className={this.props.menuClass}>
 				<div className="filter-wrapper">
@@ -15,8 +17,8 @@ class ListLocations extends Component {
 						<option value="parks">Parks</option>
 					</select>
 				</div>
-				<ul role="menuBar" tabIndex="0">
-					{this.props.option === null || this.props.option === 'exploreAll' ?
+				<ul role="menuBar" tabIndex="0"> 
+					{this.props.option === null || this.props.option === 'exploreAll' ? // render all menu items if no option is chosen
 						this.props.markers.map(marker => (
 							<li 
 								role="Menuitem"
@@ -26,10 +28,10 @@ class ListLocations extends Component {
 								onMouseOver={this.props.onMouseOverListItem}
 								onMouseOut={this.props.onMouseOutofListItem}
 								onClick={this.props.onListItemClick}
-								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ?
+								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ? // setting the right className for active&clicked menue items
 									'red' : 'black'}
 							>{marker.title}</li>
-						)) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
+						)) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => ( // render filtered menu items according to the chosen option
 							<li
 								role="Menuitem"
 								tabIndex="0"
@@ -38,7 +40,7 @@ class ListLocations extends Component {
 								onMouseOver={this.props.onMouseOverListItem}
 								onMouseOut={this.props.onMouseOutofListItem}
 								onClick={this.props.onListItemClick}
-								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ?
+								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ? // setting the right className for active&clicked menu items
 									'red' : 'black'}
 							>{marker.title}</li>
 						))

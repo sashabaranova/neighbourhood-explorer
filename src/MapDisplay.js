@@ -104,35 +104,18 @@ export class MapDisplay extends Component {
     }
   };
 
-  // isHoveredMarker = (activeMarker, marker) => {
-  //   console.log(activeMarker, marker);
-
-  //   if (typeof activeMarker === 'undefined' || activeMarker === null) {
-  //     return false;
-  //   }
-
-  //   if (activeMarker.title === marker.title) {
-  //     return true;
-  //   }
-
-  //   return false;
-  // }
-
-  // onMouseOverMarker = (e) => {
-
-  // };
+  
 
   render() {
 
 
     return (
-      // Important! Always set the container height explicitly
       <div className="map-container">
         <GoogleMapReact
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           options={this.props.options}>
-          {this.props.option === null || this.props.option === 'exploreAll' ?
+          {this.props.option === null || this.props.option === 'exploreAll' ? // render all markers if no option is chosen
             this.props.markers.map(marker => (
               <CustomMarker
                 className="fas fa-map-marker-alt"
@@ -146,7 +129,7 @@ export class MapDisplay extends Component {
                 activeMarkerId={this.props.activeMarkerId}
                 markerClickedId={this.props.markerClickedId}
               />
-            )) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
+            )) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => ( // render filtered menu items according to the chosen option
               <CustomMarker
                 className="fas fa-map-marker-alt"
                 tabIndex="1"

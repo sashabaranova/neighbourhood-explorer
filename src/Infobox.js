@@ -13,6 +13,7 @@ class Infobox extends Component {
 		currentMarkerId: null
 	}
 
+	// make fetch request on componentDidMount
 	componentDidMount() {
 		this.fetchImage();
 		this.fetchWikiPage();
@@ -48,9 +49,9 @@ class Infobox extends Component {
 		const {markerClickedId, loadInfoboxSnippet, markers} = this.props;
 		//storing the value of the current (clicked) marker 
 		this.setState({ currentMarkerId: markerClickedId });
-		console.log('request works!')
+		// console.log('request works!')
 		fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${markers[markerClickedId - 1].title}&limit=1&snippet&sectiontitle`).then(function(resp) {
-	    console.log(resp);
+	    // console.log(resp);
 	    return resp.json()
 		}).then(loadInfoboxSnippet)
 		.catch(this.handleError);
@@ -65,6 +66,7 @@ class Infobox extends Component {
 		return;
 	};
 
+
 	handleError = (e) => {
 		console.log(e);
 		if (this.props.image === null && this.props.snippet === null) {
@@ -75,7 +77,7 @@ class Infobox extends Component {
 
 	render() {
 		const {markerClickedId, markers, image, snippet, wikiUrl, isLoaded, closeModal} = this.props;
-		console.log('infobox render', this.props.isLoaded, this.props.snippet, this.props.image);
+		// console.log('infobox render', this.props.isLoaded, this.props.snippet, this.props.image);
 
 		// first checking if we manage to fetch at least an image or a snippet, otherwise we do not render the infowindow
 		// and the handleError function shows the error type in an alert
@@ -106,7 +108,7 @@ class Infobox extends Component {
 	                <figcaption>Photo by <a href={`https://unsplash.com/@${image.user.username}?utm_source=My_Udaciy_App&utm_medium`}>{image.user.name}</a> on <a href={`https://unsplash.com/?utm_source=My_Udacity_App&utm_medium=referral`}>Unsplash</a>
 	                </figcaption>
 	              </figure>
-	              ) : (image === null && snippet !== null ? (
+	              ) : (isLoaded && image === null && snippet !== null ? (
 	              		<p className="error-message">Sorry, no picture is available.</p>
 	              	) : null
 	              )
