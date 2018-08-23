@@ -333,6 +333,10 @@ li:focus {
     padding: 2.3vh;
   }
 
+  li {
+    font-size: 1.2em;
+  }
+
   .modal {
     width: 800px;
     height: 700px;
