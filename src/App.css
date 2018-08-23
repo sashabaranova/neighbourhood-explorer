@@ -1,45 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Righteous|Open+Sans:400,700');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+/******** HAMBURGER MENU ********/
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-
-
-.map-container{
-  height: 95vh;
-  width: 100%;
+.hamburger {
+  color: #fff;
+  position: absolute;
+  top: 2vh;
+  left: 10px;
+  font-size: 1.4em;
 }
 
 .locations-list {
-  background: transparent;
+  top: 7vh;
+  left: -9999px;
+  background: white;
   position: absolute;
   width: 100%;
   z-index: 999;
-  top: 100px;
+  /*top: 100px;*/
+  display: none;
   cursor: pointer;
 }
 
+.open {
+  left: 0;
+  display: block;
+}
+
+ul {
+  position: absolute;
+  list-style: none;
+  /*padding: 0 20%;*/
+  padding: 0 10px;
+  background: white;
+  margin-top: 0;
+  width: 100%;
+}
+
+li {
+  padding: 15px;
+  /*font-size: 1.7em;*/
+  border-bottom: 1px solid #dad8d8;
+  font-weight: bold;
+  /*width: 100%;*/
+}
+
+li:first-of-type {
+  border-top: 1px solid #dad8d8;
+}
+
+
+li:last-of-type {
+  border-bottom: none;
+}
+
+.map-container{
+  height: 93vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+
 .header {
-  font-size: 60%;
+  font-size: 80%;
+}
+
+.header a {
+  text-decoration: none;
+}
+
+
+h1 {
+  background-color: #ff6600;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 2vh;
+  margin: auto;
+  font-size: 1.2em;
+  height: 7vh;
+}
+
+h1, h2 {
+  font-family: 'Righteous';
+}
+
+h2 {
+  padding: 0 10px;
+}
+
+select {
+
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid #fff;
+  font-size: 11pt;
+  height: 35px;
+  letter-spacing: 0;
+  margin: 20px 10px;
+  padding: 0 10px;
+  width: 180px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 0.5px #a09c9c;
 }
 
 i {
@@ -48,57 +122,220 @@ i {
 }
 
 .red {
-  color: red;
+  color: #ff6600;
 }
 
 .black {
-  color: black;
+  color: #000;
 }
 
-.infobox {
-  width: 50%;
+/************ Infobox *************/
+
+.overlay {
   height: 100%;
+  width: 100%;
+/*  position: absolute;*/
+/*  top: 0;
+  left: 0;*/
+  background: rgba(255, 102, 0, 0.1); 
+  z-index: 999;
+}
+
+.modal {
+  width: 100%;
+  height: 100vh;
   z-index: 999;
   position: absolute;
   bottom: 0;
-  right: 0;
+  margin: 0 auto;
   background-color: white;
-
+  text-align: center;
+  outline: none;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 15px;
+.close {
+  color: #ff6600;
   font-size: 1.5em;
-  border-bottom: 1px solid darkgrey;
+  position: absolute;
+  left: 20px;
+  top: 20px;
 }
 
-li:first-of-type {
-  border-top: 1px solid darkgrey;
+
+.error-message {
+  padding: 50px 0;
+  border: 2px solid #ff6600;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.image-wrapper {
+  margin-top: 100px;
+  min-height: 180px;
+  width: 100%;
+}
+
+figure {
+  position: relative;
+}
+
+figcaption {
+  bottom: 4px;
+  /*RGBA used just in this one case to set the opacity so that children elements don't inherit it*/
+  background: rgba(255, 102, 0, 0.3);
+  color: #fff;
+  padding: 0.8em 1.4em;
+  position: absolute;
+  width: 100%;
+}
+
+.image-wrapper a {
+  opacity: 1;
+  color: #fff;
+  font-weight: bold;
+  z-index: 999;
+}
+
+.unsplash {
+  width: 100%;
+}
+
+.snippet {
+  padding: 0 30px;
+}
+
+.wiki-ref {
+  font-weight: bold;
+}
+
+.wiki-ref a {
+  color: #ff6600;
+}
+/************ FOCUS *************/
+
+ul:focus,
+li:focus,
+select:focus,
+.close:focus {
+  outline: 3px solid #ff6600;
+}
+
+li:focus {
+  color: #ff6600;
+}
+
+/************ MEDIA *************/
+
+@media screen and (min-width: 350px) {
+  .hamburger {
+    font-size: 1.8em;
+
+  }
+
+  h1 {
+    padding: 2vh;
+
+    font-size: 1.5em;
+  }
 }
 
 
+@media screen and (min-width: 750px) {
 
-@media screen and (min-width: 900px) {
   .App {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 35% 65%;
+  }
+
+  h1 {
+    font-size: 1.2em;
+    padding: 2.5vh;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   .map-container{
     height: 100vh;
-    width: 100%;
+    /*display: none;*/
+    position: static;
+    /*bottom: 0;*/
   }
 
+  
   .locations-list {
-    background: transparent;
+    background: #fff;
     position: static;
     width: 100%;
-    z-index: 999;
+    z-index: 100;
     top: 100px;
+    left: 0;
+    display: block;
+    height: 100%;
+  }
+  
+
+  ul {
+    position: static;
+    list-style: none;
+    padding: 0 20%;
+  }
+
+  li:first-of-type {
+    border-top: none;
+  }
+
+  .infobox-wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  .overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 102, 0, 0.1); 
+    z-index: 999;
+  }
+
+
+  .modal {
+    width: 700px;
+    height: 650px;
+    z-index: 999;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10vh;
+    margin: 0 auto;
+    background-color: white;
+  }
+
+  .image-wrapper {
+    margin-top: 20px;
+  }
+
+  .close {
+    left: 10px;
+    top: 5px;
   }
 }
+
+
+@media screen and (min-width: 1100px) {
+
+  h1 {
+    font-size: 1.7em;
+    padding: 2.3vh;
+  }
+
+  .modal {
+    width: 800px;
+    height: 700px;
+  }
+}
+

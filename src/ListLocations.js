@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-// import GoogleMapReact from 'google-map-react';
 
 class ListLocations extends Component {
 
 	render() {
 
-		// this.props.markers.map(marker => console.log(marker.cat));
-
 		return (
-			<div className="locations-list">
+			<div className={this.props.menuClass}>
 				<div className="filter-wrapper">
-					<select defaultValue="exploreAll" onChange={this.props.handleSelectChange}>
+					<select defaultValue="exploreAll" onChange={this.props.handleSelectChange} aria-hidden={this.props.ariaHidden}>
 						<option value="exploreAll">Explore All</option>
 						<option value="art">Art</option>
 						<option value="music">Music</option>
@@ -18,26 +15,34 @@ class ListLocations extends Component {
 						<option value="parks">Parks</option>
 					</select>
 				</div>
-				<ul>
+				<ul role="menuBar" tabIndex="0">
 					{this.props.option === null || this.props.option === 'exploreAll' ?
 						this.props.markers.map(marker => (
-              <li 
+							<li 
+								role="Menuitem"
+								tabIndex="0"
 								key={`list${marker.id}`}
 								data-id={marker.id}
 								onMouseOver={this.props.onMouseOverListItem}
 								onMouseOut={this.props.onMouseOutofListItem}
 								onClick={this.props.onListItemClick}
+								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ?
+									'red' : 'black'}
 							>{marker.title}</li>
-            )) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
-              <li 
+						)) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
+							<li
+								role="Menuitem"
+								tabIndex="0"
 								key={`list${marker.id}`}
 								data-id={marker.id}
 								onMouseOver={this.props.onMouseOverListItem}
 								onMouseOut={this.props.onMouseOutofListItem}
 								onClick={this.props.onListItemClick}
+								className={(+marker.id === +this.props.activeMarkerId || +marker.id === +this.props.markerClickedId) ?
+									'red' : 'black'}
 							>{marker.title}</li>
-            ))
-          }
+						))
+					}
 				</ul>
 			</div>
 		);

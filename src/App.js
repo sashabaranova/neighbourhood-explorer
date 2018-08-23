@@ -3,34 +3,42 @@ import React, { Component } from 'react';
 import './App.css';
 import MapDisplay from './MapDisplay';
 import ListLocations from './ListLocations';
+import Infobox from './Infobox';
 
 class App extends Component {
 
   state = {
     markers: [
-      { id: 1, title: 'Statue of Sir Stamford Raffles', location: { lat: 1.2903844, lng: 103.8521383 }, cat: 'art' },
-      { id: 2, title: 'Esplanade', location: { lat: 1.2897934, lng: 103.8558166 }, cat: 'music'},
-      { id: 3, title: 'Gardens by the Bay', location: { lat: 1.282917280291502, lng: 103.8649621802915 }, cat: 'parks' },
-      { id: 4, title: 'One Raffles Place', location: { lat: 1.285536280291502, lng: 103.8524067802915 }, cat: 'architecture' },
-      { id: 5, title: 'Fort Canning', location: { lat: 1.295860780291502, lng: 103.8471493802915 }, cat: 'parks' },
-      { id: 6, title: 'Masjid Sultan', location: { lat: 1.302751, lng: 103.8565582 }, cat: 'architecture' },
-      { id: 7, title: 'Singapore Art Museum', location: { lat: 1.2973126, lng: 103.8488728 }, cat: 'art' }
+      { id: 1, title: 'Buddha Tooth Relic Temple', location: { lat: 1.2815014, lng: 103.8420485 }, cat: 'art', unsplashId: 'JH8YVV39R74' },
+      { id: 2, title: 'Esplanade', location: { lat: 1.2897934, lng: 103.8558166 }, cat: 'music', unsplashId: 'pJ3O3NZc22s' },
+      { id: 3, title: 'Gardens by the Bay', location: { lat: 1.282917280291502, lng: 103.8649621802915 }, cat: 'parks', unsplashId: '4HVCsDOg0qI' },
+      { id: 4, title: 'Merlion Park', location: { lat: 1.2866996, lng: 103.8521297 }, cat: 'parks', unsplashId: 'HA1jee1s9qg' },
+      { id: 5, title: 'National Stadium, Singapore', location: { lat: 1.3040184, lng: 103.8726539 }, cat: 'architecture', unsplashId: 'cTO6DWSIdWI' },
+      { id: 6, title: 'ArtScience Museum', location: { lat: 1.2862792, lng: 103.8570776 }, cat: 'art', unsplashId: 'WNk-f-TnZDw' }
     ],
 
     activeMarkerId: null,
     markerClickedId: null,
-    option: null
+    option: null,
+    error: null,
+    isLoaded: false,
+    image: null,
+    snippet: null,
+    wikiUrl: null,
+    menuClass: 'locations-list',
+    isClicked: false, 
+    modalIsOpen: false
   };
 
   handleSelectChange = (e) => {
     this.setState({ option: e.target.value });
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
 
 
   onMouseOverItem = (e) => {
-    console.log(e.target.dataset);
+    // console.log(e.target.dataset);
     if (this.state.activeMarkerId === null || this.state.activeMarkerId !== e.target.dataset.id) {
       this.setState({ activeMarkerId: e.target.dataset.id });
 
@@ -44,31 +52,63 @@ class App extends Component {
 
     this.setState({ activeMarkerId: null });
 
-    console.log('mouse out');
+    // console.log('mouse out');
   };
 
   onItemClick = (e) => {
-    console.log(e.target.dataset);
+
+    console.log(this.state.image);
+
     if (this.state.markerClickedId === null || this.state.markerClickedId !== e.target.dataset.id) {
-      this.setState({ markerClickedId: e.target.dataset.id, activeMarkerId: null });
+      this.setState({ markerClickedId: e.target.dataset.id, activeMarkerId: null, isLoaded: false, modalIsOpen: true });
     }
-    // console.log('click');
+    console.log(this.state.modalIsOpen);
   };
 
-  onAppClick = (e) => {
+  closeModal = (e) => {
+    console.log(this.state.modalIsOpen)
+    // if (this.state.isLoaded) {
+    //   this.setState({ isLoaded: false, image: null })
+    // }
     if (this.state.markerClickedId !== null) {
-      this.setState({ markerClickedId: null });
+      this.setState({ markerClickedId: null, modalIsOpen: false });
     }
   };
+
+  loadInfoboxImage = (img) => {
+    // console.log(data.results[0]);
+    this.setState({ isLoaded: true, image: img })
+  };
+
+  loadInfoboxSnippet = (data) => {
+    this.setState({ snippet: data[2][0], wikiUrl: data[3][0] })
+  };
+
+  onHamClick = () => {
+    console.log(this.state.isClicked);
+    if (!this.state.isClicked) {
+      this.setState({ isClicked: true, menuClass: 'locations-list open' })
+    } else {
+      this.setState({ isClicked: false, menuClass: 'locations-list' })
+    }
+  }
+
 
   render() {
-    console.log(this.state.activeMarkerId, this.state.markerClickedId)
+    // console.log(this.state.activeMarkerId, this.state.markerClickedId)
     return (
       <div className="App">
         <div className="header">
-          <h1
-            onClick={this.onAppClick}
-          >Neighbourhood Explorer</h1>
+          <i className="fas fa-bars hamburger"
+            onClick={this.onHamClick}
+            role="Button"
+            tabIndex="0"
+          ></i>
+          <a href="./">
+            <h1
+              onClick={this.onAppClick}
+            >Neighbourhood Explorer</h1>
+          </a>
           <ListLocations 
             markers={this.state.markers}
             onMouseOverListItem={this.onMouseOverItem}
@@ -76,9 +116,9 @@ class App extends Component {
             onListItemClick={this.onItemClick}
             activeMarkerId={this.state.activeMarkerId}
             markerClickedId={this.state.markerClickedId}
-            onAppClick={this.onAppClick}
             handleSelectChange={this.handleSelectChange}
             option={this.state.option}
+            menuClass={this.state.menuClass}
           />
         </div>
         <MapDisplay
@@ -88,14 +128,22 @@ class App extends Component {
           onMarkerClick={this.onItemClick}
           activeMarkerId={this.state.activeMarkerId}
           markerClickedId={this.state.markerClickedId}
-          onAppClick={this.onAppClick}
           option={this.state.option}
           />
         {this.state.markerClickedId != null ? (
-          <div
-            className="infobox">
-            {this.state.markers[this.state.markerClickedId - 1].title}
-          </div>): null
+          <Infobox 
+            markers={this.state.markers}
+            markerClickedId={this.state.markerClickedId}
+            isLoaded={this.state.isLoaded}
+            image={this.state.image}
+            loadInfoboxImage={this.loadInfoboxImage}
+            loadInfoboxSnippet={this.loadInfoboxSnippet}
+            snippet={this.state.snippet}
+            wikiUrl={this.state.wikiUrl}
+            closeModal={this.closeModal}
+            modalIsOpen={this.state.modalIsOpen}
+          />  
+        ): null
         } 
       </div>
     );

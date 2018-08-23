@@ -10,7 +10,7 @@ export class MapDisplay extends Component {
       lat : 1.2852096,
       lng : 103.8599263
     },
-    zoom: 14,
+    zoom: 13,
     options: {
       styles: [
         {
@@ -131,9 +131,7 @@ export class MapDisplay extends Component {
         <GoogleMapReact
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          options={this.props.options}
-          onClick={this.props.onAppClick}>
-
+          options={this.props.options}>
           {this.props.option === null || this.props.option === 'exploreAll' ?
             this.props.markers.map(marker => (
               <CustomMarker
@@ -151,6 +149,7 @@ export class MapDisplay extends Component {
             )) : this.props.markers.filter(marker => marker.cat === this.props.option).map(marker => (
               <CustomMarker
                 className="fas fa-map-marker-alt"
+                tabIndex="1"
                 lat={marker.location.lat}
                 lng={marker.location.lng}
                 key={marker.id}
